@@ -20,7 +20,7 @@ DallasTemperature tempSensor(&oneWire);
 #define SENSOR_POWER D1
 
 const int DRY_VALUE = 810;  //in air
-const int WET_value = 308; //in water
+const int WET_VALUE = 308; //in water
 
 void setup() {
   // put your setup code here, to run once:
@@ -50,12 +50,52 @@ int readMoisture(){
 //func for moisture in percent
 
 int percentMoisture (int raw_value){
-  int moisture_percent = map(raw_value DRY_VALUE,WET_VALUE, 0, 100);
+  int moisture_percent = map(raw_value, DRY_VALUE, WET_VALUE, 0, 100);
 
   moisture_percent = constrain(moisture_percent, 0 , 100); //ограничение
 
   return moisture_percent;
 }
+
+//func for text status
+String getMoistureStatus (int percent){
+  if (percent<20){
+    return "very wet";
+  }
+  else if (percent<40){
+    return "wet";
+  }
+  else if (percent<60){
+    return "normal";
+  }
+  else if (percent<80){
+    return "dry";
+  }
+  else{
+    return "very dry";
+  }
+}
+
+//func for temperature status
+String getTemperatureStatus(float temp){
+  if (temp < 10){
+    return "TOO COLD";
+  }
+  else if (temp < 18){
+    return "COLD";
+  }
+  else if (temp < 28){
+    return "NORMAL";
+  }
+  else if (temp < 35){
+    return "WARM";
+  }
+  else{
+    return "TOO HOT";
+  }
+}
+
+
 void loop() {
   // put your main code here, to run repeatedly:
 
